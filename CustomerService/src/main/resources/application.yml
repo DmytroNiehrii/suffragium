@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: development
+
 ---
 spring:
   profiles: development
@@ -9,9 +10,15 @@ spring:
     database: MYSQL
     generate-ddl: true
   datasource:
-    url: jdbc:mysql://localhost:3306/dev
+    url: jdbc:mysql://localhost:3306/mysql
     username: root
-    password: dbpass
+    password: passdb
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 ---
 spring:
   profiles: test

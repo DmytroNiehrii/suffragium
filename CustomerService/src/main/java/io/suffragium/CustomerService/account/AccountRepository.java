@@ -1,6 +1,6 @@
 package io.suffragium.CustomerService.account;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AccountRepository extends PagingAndSortingRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 }
