@@ -59,7 +59,7 @@ public class CustomerProfilePhotoRestController {
 
     @RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT })
     Callable<ResponseEntity<?>> write(@PathVariable Long id,
-                                      @RequestParam MultipartFile file) // <3>
+                                      @RequestParam MultipartFile file)
             throws Exception {
         log.info(String.format("upload-start /customers/%s/photo (%s bytes)", id,
                 file.getSize()));
