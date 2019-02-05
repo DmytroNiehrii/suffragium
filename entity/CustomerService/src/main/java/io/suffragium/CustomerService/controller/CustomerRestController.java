@@ -60,15 +60,22 @@ public class CustomerRestController {
     }
 
     @GetMapping(value = "/customers/{id}")
-    ResponseEntity<Resource<Customer>> get(@PathVariable Long id) {
+    ResponseEntity<Resource<Customer>> getCustomerResource(@PathVariable Long id) {
         return this.customerRepository.findById(id)
                 .map(c -> ResponseEntity.ok(this.customerResourceAssembler.toResource(c)))
                 .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
+    @GetMapping(value = "/customers/{id}/object")
+    ResponseEntity<Customer> get(@PathVariable Long id) {
+        return this.customerRepository.findById(id)
+                .map(c -> ResponseEntity.ok(c))
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+    }
+
     @PostMapping(value = "/customers")
     ResponseEntity<Resource<Customer>> post(@RequestBody Customer c) {
-        Customer customer = this.customerRepository.save(new Customer(c.getFirstName(), c.getLastName(), c.getEmail()));
+        Customer customer = this.customerRepository.save(new Customer(c.getFirstName(), c.getLastName(), c.getEmail(), c.getAccount()));
         URI uri = MvcUriComponentsBuilder.fromController(getClass())
                 .path("/customers/{id}").buildAndExpand(customer.getId()).toUri();
         return ResponseEntity.created(uri).body(

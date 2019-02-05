@@ -20,14 +20,25 @@ public class CustomerResourceAssembler implements ResourceAssembler<Customer, Re
                     MvcUriComponentsBuilder.on(CustomerProfilePhotoRestController.class)
                                 .read(customer.getId())
                 ).buildAndExpand().toUri();
+        URI accountUri = MvcUriComponentsBuilder
+                .fromMethodCall(
+                        MvcUriComponentsBuilder.on(AccountRestController.class).get(customer.getAccount().getId())
+                ).buildAndExpand().toUri();
         URI selfUri = MvcUriComponentsBuilder
                 .fromMethodCall(
                     MvcUriComponentsBuilder.on(CustomerRestController.class)
-                .get(customer.getId())
+                .getCustomerResource(customer.getId())
         ).buildAndExpand().toUri();
+        URI fullObjectUri = MvcUriComponentsBuilder
+                .fromMethodCall(
+                        MvcUriComponentsBuilder.on(CustomerRestController.class)
+                                .get(customer.getId())
+                ).buildAndExpand().toUri();
 
         customerResource.add(new Link(selfUri.toString(), "self"));
         customerResource.add(new Link(photoUri.toString(), "profile-photo"));
+        customerResource.add(new Link(accountUri.toString(), "account"));
+        customerResource.add(new Link(fullObjectUri.toString(), "full-object"));
         return customerResource;
     }
 }
