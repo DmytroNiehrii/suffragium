@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    show_sql: false
+    database: MYSQL
+    generate-ddl: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/mysql
+    username: root
+    password: passdb
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

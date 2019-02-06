@@ -2,6 +2,7 @@ package io.suffragium.CommunityService.controller;
 
 import io.suffragium.CommunityService.community.CommunityRepository;
 import io.suffragium.common.entity.community.Community;
+import io.suffragium.common.entity.community.CommunityMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -81,6 +83,18 @@ public class CommunityRestController {
                 this.communityResourceAssembler.toResource(community));
     }
 
+    @PostMapping(value = "/communities/{id}/add-member")
+    ResponseEntity<Resource<Community>> addMemberToCommunity(@PathVariable Long id, @RequestBody Set<Long> members) {
+        return this.communityRepository.findById(id)
+                .map(c -> {
+                    this.communityRepository.save(c.addMembers(members));
+                    Resource<Community> communityResource = this.communityResourceAssembler.toResource(c);
+                    URI selfLink = URI.create(ServletUriComponentsBuilder.fromCurrentRequest().toUriString());
+                    return ResponseEntity.created(selfLink).body(communityResource);
+                })
+                .orElseThrow(() -> new CommunityNotFoundException(id));
+    }
+
     @DeleteMapping(value = "/communities/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
         return this.communityRepository.findById(id).map(c -> {
@@ -99,8 +113,8 @@ public class CommunityRestController {
     @PutMapping("/communities/{id}")
     ResponseEntity<Resource<Community>> put(@PathVariable Long id,
                                            @RequestBody Community c) {
-        Community customer = this.communityRepository.save(new Community(c));
-        Resource<Community> communityResource = this.communityResourceAssembler.toResource(customer);
+        Community community = this.communityRepository.save(new Community(c));
+        Resource<Community> communityResource = this.communityResourceAssembler.toResource(community);
         URI selfLink = URI.create(ServletUriComponentsBuilder.fromCurrentRequest().toUriString());
         return ResponseEntity.created(selfLink).body(communityResource);
     }
