@@ -16,7 +16,7 @@ import java.util.Set;
 * */
 
 @Configuration
-@EntityScan("io.suffragium.common.entity")
+@EntityScan("io.suffragium.common.entity.customer")
 public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
 
     @Override

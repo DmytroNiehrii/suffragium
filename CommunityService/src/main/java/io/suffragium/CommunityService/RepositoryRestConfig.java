@@ -1,6 +1,7 @@
 package io.suffragium.CommunityService;
 
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
@@ -15,6 +16,7 @@ import java.util.Set;
 * */
 
 @Configuration
+@EntityScan("io.suffragium.common.entity.community")
 public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
 
     @Override

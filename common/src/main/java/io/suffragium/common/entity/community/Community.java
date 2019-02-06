@@ -18,7 +18,8 @@ public class Community extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long creatorAccountId;
-    private Set<Long> members = new HashSet<>();
+    @OneToMany
+    private Set<CommunityMember> members = new HashSet<>();
     private String title;
     private String description;
 
@@ -28,4 +29,9 @@ public class Community extends BaseEntity {
         this.description = description;
     }
 
+    public Community(Community c) {
+        this.creatorAccountId = c.getCreatorAccountId();
+        this.title = c.getTitle();
+        this.description = c.getDescription();
+    }
 }

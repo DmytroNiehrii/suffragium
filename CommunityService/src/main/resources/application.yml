@@ -1,0 +1,47 @@
+spring:
+  profiles:
+    active: development
+
+---
+spring:
+  profiles: development
+  jpa:
+    show_sql: false
+    database: MYSQL
+    generate-ddl: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/mysql
+    username: root
+    password: passdb
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring:
+  profiles: test
+  jpa:
+    show_sql: false
+    database: H2
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+
+---
+spring:
+  profiles: docker
+  jpa:
+    show_sql: false
+    database: MYSQL
+    generate-ddl: true
+  datasource:
+    url: jdbc:mysql://${DB_HOSTNAME}:${DB_PORT}/${DB_DATABASE}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
