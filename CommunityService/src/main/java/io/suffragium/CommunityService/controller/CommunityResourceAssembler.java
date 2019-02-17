@@ -14,20 +14,21 @@ public class CommunityResourceAssembler implements ResourceAssembler<Community, 
 
     @Override
     public Resource<Community> toResource(Community community) {
-        Resource<Community> communityResource = new Resource<>(community);
+        /*Resource<Community> communityResource = new Resource<>(community);
         URI selfUri = MvcUriComponentsBuilder
                 .fromMethodCall(
                     MvcUriComponentsBuilder.on(CommunityRestController.class)
                 .getCommunityResource(community.getId())
         ).buildAndExpand().toUri();
-       /* URI fullObjectUri = MvcUriComponentsBuilder
+       *//* URI fullObjectUri = MvcUriComponentsBuilder
                 .fromMethodCall(
                         MvcUriComponentsBuilder.on(CommunityRestController.class)
                                 .get(community.getId())
-                ).buildAndExpand().toUri();*/
+                ).buildAndExpand().toUri();*//*
 
         communityResource.add(new Link(selfUri.toString(), "self"));
         //communityResource.add(new Link(fullObjectUri.toString(), "full-object"));
-        return communityResource;
+        return communityResource;*/
+        return null;
     }
 }

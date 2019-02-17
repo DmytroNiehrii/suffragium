@@ -18,15 +18,12 @@ import java.util.Set;
 @Configuration
 @EntityScan("io.suffragium.common.entity.community")
 public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
-
     @Override
     public void configureRepositoryRestConfiguration(final RepositoryRestConfiguration config) {
-
-        final ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
-                false);
+        final ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
 
-        final Set<BeanDefinition> beans = provider.findCandidateComponents("io.suffragium.CommunityService");
+        final Set<BeanDefinition> beans = provider.findCandidateComponents("io.suffragium.common.entity.community");
 
         for (final BeanDefinition bean : beans) {
             try {

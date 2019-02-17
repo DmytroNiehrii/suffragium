@@ -11,7 +11,6 @@ import java.net.URI;
 
 @Component
 public class CustomerResourceAssembler implements ResourceAssembler<Customer, Resource<Customer>> {
-
     @Override
     public Resource<Customer> toResource(Customer customer) {
         Resource<Customer> customerResource = new Resource<>(customer);
@@ -20,25 +19,14 @@ public class CustomerResourceAssembler implements ResourceAssembler<Customer, Re
                     MvcUriComponentsBuilder.on(CustomerProfilePhotoRestController.class)
                                 .read(customer.getId())
                 ).buildAndExpand().toUri();
-        URI accountUri = MvcUriComponentsBuilder
-                .fromMethodCall(
-                        MvcUriComponentsBuilder.on(AccountRestController.class).get(customer.getAccount().getId())
-                ).buildAndExpand().toUri();
         URI selfUri = MvcUriComponentsBuilder
                 .fromMethodCall(
                     MvcUriComponentsBuilder.on(CustomerRestController.class)
-                .getCustomerResource(customer.getId())
+                .get(customer.getId())
         ).buildAndExpand().toUri();
-        URI fullObjectUri = MvcUriComponentsBuilder
-                .fromMethodCall(
-                        MvcUriComponentsBuilder.on(CustomerRestController.class)
-                                .get(customer.getId())
-                ).buildAndExpand().toUri();
 
         customerResource.add(new Link(selfUri.toString(), "self"));
         customerResource.add(new Link(photoUri.toString(), "profile-photo"));
-        customerResource.add(new Link(accountUri.toString(), "account"));
-        customerResource.add(new Link(fullObjectUri.toString(), "full-object"));
         return customerResource;
     }
 }

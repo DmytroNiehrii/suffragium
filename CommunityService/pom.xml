@@ -11,7 +11,7 @@
     <name>community-service</name>
     <version>0.0.1</version>
 
-    <artifactId>community-service</artifactId>
+    <artifactId>CommunityService</artifactId>
 
     <dependencies>
         <dependency>

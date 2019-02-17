@@ -2,6 +2,7 @@ package io.suffragium.common.entity.customer;
 
 import io.suffragium.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Address extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,13 +26,4 @@ public class Address extends BaseEntity {
     private String city;
     private String country;
     private Integer zipCode;
-
-    public Address(String street1, String street2, String state, String city, String country, Integer zipCode) {
-        this.street1 = street1;
-        this.street2 = street2;
-        this.state = state;
-        this.city = city;
-        this.country = country;
-        this.zipCode = zipCode;
-    }
 }

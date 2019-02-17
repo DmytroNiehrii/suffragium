@@ -1,9 +1,7 @@
 package io.suffragium.CustomerService;
 
-import com.mysql.cj.exceptions.AssertionFailedException;
 import io.suffragium.common.entity.customer.Customer;
 import io.suffragium.CustomerService.customer.CustomerRepository;
-import io.suffragium.common.entity.customer.Account;
 import io.suffragium.common.entity.customer.Address;
 import io.suffragium.common.entity.customer.CreditCard;
 import io.suffragium.common.entity.customer.CreditCardType;
@@ -16,10 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashSet;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CustomerServiceApplication.class)
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles(profiles = "test")
-public class CustomerServiceApplicationTests {
+public class ApplicationTests {
 	@Autowired
 	private CustomerRepository customerRepository;
     @Autowired
@@ -31,27 +31,41 @@ public class CustomerServiceApplicationTests {
 
 	@Test
 	public void customerTest() {
-		Account account = new Account("12345");
-		Customer customer = new Customer("Jane", "Doe", "jane.doe@gmail.com", account);
-		CreditCard creditCard = new CreditCard("1234567890", CreditCardType.VISA);
-		customer.getAccount().getCreditCards().add(creditCard);
+    	final String street1 = "1600 Pennsylvania Ave NW";
 
-		String street1 = "1600 Pennsylvania Ave NW";
-		Address address = new Address(street1, null, "DC", "Washington", "United States", 20500);
-		customer.getAccount().getAddresses().add(address);
+		CreditCard creditCard = CreditCard.builder()
+				.number("1234567890")
+				.type(CreditCardType.VISA)
+				.build();
+		Customer customer = Customer.builder()
+				.firstName("Jane")
+				.lastName("Doe")
+				.email("jane.doe@gmail.com")
+				.creditCards(new HashSet<CreditCard>())
+				.addresses(new HashSet<Address>())
+				.build();
+		customer.getCreditCards().add(creditCard);
+		customer.getAddresses().add(
+				Address.builder()
+						.street1(street1)
+						.state("DC")
+						.city("Washington")
+						.country("United States")
+						.zipCode(20500)
+						.build()
+		);
 
 		customer = customerRepository.save(customer);
 		Customer persistedResult = customerRepository.findById(customer.getId()).get();
 
-		Assert.assertNotNull(persistedResult.getAccount());
         Assert.assertNotNull(persistedResult.getCreatedAt());
         Assert.assertNotNull(persistedResult.getLastModified());
 
-        Assert.assertTrue(persistedResult.getAccount().getAddresses().stream()
+        Assert.assertTrue(persistedResult.getAddresses().stream()
                 .anyMatch(add -> add.getStreet1().equalsIgnoreCase(street1)));
 
         customerRepository.findByEmailContaining(customer.getEmail()).orElseThrow(
-                () -> new AssertionFailedException(new RuntimeException("there's supposed to be a matching record!"))
+                () -> new RuntimeException("there's supposed to be a matching record!")
         );
 	}
 

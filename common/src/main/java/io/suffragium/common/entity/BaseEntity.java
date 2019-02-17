@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @CreatedDate
-    private Long createdAt;
+    protected Long createdAt;
     @LastModifiedDate
-    private Long lastModified;
+    protected Long lastModified;
 }

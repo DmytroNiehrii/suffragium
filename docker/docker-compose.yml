@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  customerServiceDB:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passdb    
+    ports:
+    - 3306:3306
+  customerServiceDBadminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3307:8080

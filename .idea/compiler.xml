@@ -9,6 +9,7 @@
         <module name="common" />
         <module name="community-service" />
         <module name="CustomerService" />
+        <module name="rest-basics" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

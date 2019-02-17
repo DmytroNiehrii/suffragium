@@ -75,7 +75,7 @@ public class CustomerProfilePhotoRestController {
                             catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
-                            URI location = fromCurrentRequest().buildAndExpand(id).toUri(); // <4>
+                            URI location = fromCurrentRequest().buildAndExpand(id).toUri();
                             log.info(String.format("upload-finish /customers/%s/photo (%s)", id,
                                     location));
                             return ResponseEntity.created(location).build();

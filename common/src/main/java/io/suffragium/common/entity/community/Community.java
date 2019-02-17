@@ -21,7 +21,7 @@ public class Community extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long creatorAccountId;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<CommunityMember> members = new HashSet<>();
     private String title;
     private String description;

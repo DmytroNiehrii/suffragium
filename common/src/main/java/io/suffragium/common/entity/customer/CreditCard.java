@@ -1,6 +1,7 @@
 package io.suffragium.common.entity.customer;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +19,4 @@ public class CreditCard {
     private String number;
     @Enumerated(EnumType.STRING)
     private CreditCardType type;
-
-    public CreditCard(String number, CreditCardType type) {
-        this.number = number;
-        this.type = type;
-    }
 }

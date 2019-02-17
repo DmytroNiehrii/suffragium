@@ -3,8 +3,11 @@ package io.suffragium.CustomerService;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
@@ -16,7 +19,8 @@ import java.util.Set;
 * */
 
 @Configuration
-@EntityScan("io.suffragium.common.entity.customer")
+@EntityScan(basePackages = {"io.suffragium.common.entity.customer"})
+@EnableJpaAuditing
 public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
 
     @Override
@@ -26,7 +30,7 @@ public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
                 false);
         provider.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
 
-        final Set<BeanDefinition> beans = provider.findCandidateComponents("io.suffragium.CustomerService");
+        final Set<BeanDefinition> beans = provider.findCandidateComponents("io.suffragium.common.entity.customer");
 
         for (final BeanDefinition bean : beans) {
             try {
